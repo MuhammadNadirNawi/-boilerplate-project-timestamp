@@ -28,11 +28,14 @@ const checkFormatDate = (req, res, next) => {
   const date = req.params.date
   const patternDate = /^\d{4}-\d{2}-\d{2}$/;
   const patternUnix = /^\d{13}$/;
+  const patternString = ' ';
   const isCorrectFormatDate = patternDate.test(date); 
   const isCorrectFormatUnix = patternUnix.test(date); 
+  const isCorrectFormatString = date.includes(patternString); 
   // console.log(isCorrectFormatDate)
   // console.log(isCorrectFormatUnix)
-  if (isCorrectFormatDate == false && isCorrectFormatUnix == false){
+  // console.log(isCorrectFormatString)
+  if (isCorrectFormatDate == false && isCorrectFormatUnix == false && isCorrectFormatString == false){
     res.json({error : "Invalid Date"})
   }else(
     next()

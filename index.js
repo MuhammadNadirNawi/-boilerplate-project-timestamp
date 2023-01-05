@@ -24,12 +24,32 @@ app.get("/api/hello", function (req, res) {
   res.json({greeting: 'hello API'});
 });
 
-app.get("/api/:date", (req, res) => {
+const checkFormatDate = (req, res, next) => {
+  const date = req.params.date
+  const pattern = /^\d{4}-\d{2}-\d{2}$/;
+  const isCorrectFormat = pattern.test(date); 
+  console.log(isCorrectFormat)
+  if (isCorrectFormat == false){
+    res.json({error : "Invalid Date"})
+  }else(
+    next()
+  )
+}
+
+app.get("/api/", (req, res) => {
+  const utcTime = new Date().toUTCString()
+  const unixTime = new Date().getTime()
+  res.json({unix: unixTime, utc: utcTime})
+})
+
+app.get("/api/:date",checkFormatDate, (req, res) => {
   const date = req.params.date
   const utcTime = new Date(date).toUTCString()
   const unixTime = new Date(date).getTime()
   res.json({unix: unixTime, utc: utcTime})
 })
+
+
 
 // listen for requests :)
 var listener = app.listen(process.env.PORT, function () {

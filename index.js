@@ -26,10 +26,13 @@ app.get("/api/hello", function (req, res) {
 
 const checkFormatDate = (req, res, next) => {
   const date = req.params.date
-  const pattern = /^\d{4}-\d{2}-\d{2}$/;
-  const isCorrectFormat = pattern.test(date); 
-  // console.log(isCorrectFormat)
-  if (isCorrectFormat == false){
+  const patternDate = /^\d{4}-\d{2}-\d{2}$/;
+  const patternUnix = /^\d{13}$/;
+  const isCorrectFormatDate = patternDate.test(date); 
+  const isCorrectFormatUnix = patternUnix.test(date); 
+  // console.log(isCorrectFormatDate)
+  // console.log(isCorrectFormatUnix)
+  if (isCorrectFormatDate == false && isCorrectFormatUnix == false){
     res.json({error : "Invalid Date"})
   }else(
     next()
@@ -51,11 +54,14 @@ app.get("/api/", (req, res) => {
 })
 
 app.get("/api/:date",checkFormatDate, (req, res) => {
-  const date = req.params.date
+  let date = req.params.date
   // console.log(typeof date)
   // console.log(date)
-  const utcTime = new Date(`${date}`).toUTCString()
-  const unixTime = new Date(`${date}`).getTime()
+  if(date.length == 13){
+    date = Number(date)
+  }
+  const utcTime = new Date(date).toUTCString()
+  const unixTime = new Date(date).getTime()
   res.json({unix: unixTime, utc: utcTime})
 })
 

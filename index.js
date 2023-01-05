@@ -28,7 +28,7 @@ const checkFormatDate = (req, res, next) => {
   const date = req.params.date
   const pattern = /^\d{4}-\d{2}-\d{2}$/;
   const isCorrectFormat = pattern.test(date); 
-  console.log(isCorrectFormat)
+  // console.log(isCorrectFormat)
   if (isCorrectFormat == false){
     res.json({error : "Invalid Date"})
   }else(
@@ -36,25 +36,26 @@ const checkFormatDate = (req, res, next) => {
   )
 }
 
-// app.get("/api/", (req, res) => {
-//   // const now = new Date();
-//   // const year = now.getFullYear();
-//   // const month = now.getMonth() + 1; // months are zero-indexed, so we need to add 1
-//   // const day = now.getDate();
-//   // const date = `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
-//   const date = new Date()
-//   console.log(date)
-//   console.log(typeof date)
-//   const utcTime = new Date(date).toUTCString()
-//   const unixTime = new Date(date).getTime()
-//   res.json({unix: unixTime, utc: utcTime})
-// })
+app.get("/api/", (req, res) => {
+  // const now = new Date();
+  // const year = now.getFullYear();
+  // const month = now.getMonth() + 1; // months are zero-indexed, so we need to add 1
+  // const day = now.getDate();
+  // const date = `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
+  const date = new Date()
+  // console.log(date)
+  // console.log(typeof date)
+  const utcTime = new Date(date).toUTCString()
+  const unixTime = new Date(date).getTime()
+  res.json({unix: unixTime, utc: utcTime})
+})
 
 app.get("/api/:date",checkFormatDate, (req, res) => {
   const date = req.params.date
-  console.log(typeof date)
-  const utcTime = new Date(date).toUTCString()
-  const unixTime = new Date(date).getTime()
+  // console.log(typeof date)
+  // console.log(date)
+  const utcTime = new Date(`${date}`).toUTCString()
+  const unixTime = new Date(`${date}`).getTime()
   res.json({unix: unixTime, utc: utcTime})
 })
 

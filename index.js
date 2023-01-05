@@ -58,7 +58,7 @@ app.get("/api/:date",checkFormatDate, (req, res) => {
   // console.log(typeof date)
   // console.log(date)
   if(date_string.length == 13){
-    date_string = Number(date) 
+    date_string = Number(date_string) 
   }
   const utcTime = new Date(date_string).toUTCString()
   const unixTime = new Date(date_string).getTime()

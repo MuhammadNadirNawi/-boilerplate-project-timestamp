@@ -37,13 +37,15 @@ const checkFormatDate = (req, res, next) => {
 }
 
 app.get("/api/", (req, res) => {
-  const utcTime = new Date().toUTCString()
-  const unixTime = new Date().getTime()
+  const date = new Date().toString()
+  const utcTime = new Date(date).toUTCString()
+  const unixTime = new Date(date).getTime()
   res.json({unix: unixTime, utc: utcTime})
 })
 
 app.get("/api/:date",checkFormatDate, (req, res) => {
   const date = req.params.date
+  console.log(typeof date)
   const utcTime = new Date(date).toUTCString()
   const unixTime = new Date(date).getTime()
   res.json({unix: unixTime, utc: utcTime})

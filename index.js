@@ -45,23 +45,23 @@ app.get("/api/", (req, res) => {
   // const month = now.getMonth() + 1; // months are zero-indexed, so we need to add 1
   // const day = now.getDate();
   // const date = `${year}-${month.toString().padStart(2, '0')}-${day.toString().padStart(2, '0')}`;
-  const date = new Date()
+  const date_string = new Date()
   // console.log(date)
   // console.log(typeof date)
-  const utcTime = new Date(date).toUTCString()
-  const unixTime = new Date(date).getTime()
+  const utcTime = new Date(date_string).toUTCString()
+  const unixTime = new Date(date_string).getTime()
   res.json({unix: unixTime, utc: utcTime})
 })
 
 app.get("/api/:date",checkFormatDate, (req, res) => {
-  let date = req.params.date
+  let date_string = req.params.date
   // console.log(typeof date)
   // console.log(date)
-  if(date.length == 13){
-    date = Number(date)
+  if(date_string.length == 13){
+    date_string = Number(date) 
   }
-  const utcTime = new Date(date).toUTCString()
-  const unixTime = new Date(date).getTime()
+  const utcTime = new Date(date_string).toUTCString()
+  const unixTime = new Date(date_string).getTime()
   res.json({unix: unixTime, utc: utcTime})
 })
 
